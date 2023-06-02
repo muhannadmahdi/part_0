@@ -1,0 +1,60 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant database
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    Note right of browser: The browser fetches the initial HTML document for the single-page app
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the single-page app JavaScript code
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Initial notes JSON
+    deactivate server
+
+    Note right of browser: The single-page app renders the initial notes
+
+    Note right of browser: The user interacts with the single-page app
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    server-->>browser: Success response
+    deactivate server
+
+    Note right of browser: The single-page app sends a POST request to create a new note
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated notes JSON
+    deactivate server
+
+    Note right of browser: The single-page app receives the updated notes
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/modify_spa
+    activate server
+    server-->>browser: Success response
+    deactivate server
+
+    Note right of browser: The single-page app sends a POST request to modify a note
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated notes JSON
+    deactivate server
+
+    Note right of browser: The single-page app receives the updated notes
