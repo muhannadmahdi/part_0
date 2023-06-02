@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant database
+
+    Note over browser: User writes a note in the text field
+
+    browser->>browser: Capture note content
+
+    browser->>browser: Capture current date
+
+    browser->>browser: Create JSON object { "content": "New note", "date": "2023-06-01" }
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+
+    server->>database: Save new note
+    activate database
+    database-->>server: Note saved successfully
+    deactivate database
+
+    server-->>browser: Response 200 OK
+    deactivate server
+
+    Note right of browser: Display a success message to the user
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+
+    server-->>browser: Updated note list
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the updated notes
